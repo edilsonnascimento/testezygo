@@ -1,0 +1,75 @@
+<div>
+    <div class="header gradient">
+      <%= image_tag 'cocktail-white.svg', class: 'icon' %>
+      <div class="header__title">The drinks searcher</div>
+    </div>
+
+    <%if @option == "simple"
+            checkedsimples = "CHECKED"
+        else
+            checkedsimples = ""
+        end
+
+    if @option == "advanced"
+            checkedAdvanced = "CHECKED"
+        else
+            checkedAdvanced = ""
+        end
+    %>
+
+    <div class="searcher">
+        <%= form_tag(drinks_path, :method => :get) do %>
+
+            <div class="searcher__radio">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="searchRadio" id="simpleSearch" value="simple" <%=checkedsimples%>>
+                    <label class="form-check-label" for="simpleSearch">Easy search</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="searchRadio" id="advancedSearch" value="advanced" <%=checkedAdvanced%>>
+                    <label class="form-check-label" for="advancedSearch">Recommend me ;)</label>
+                </div>
+            </div>
+
+            <div class="simple-form" style="display:none;">
+                <div class="simple-form__input" >
+                    <%= text_field(nil, :campo, class: "form-control form-control-lg", placeholder: 'Try a Mojito..') %>
+                </div>                
+            </div>
+
+            <div class="advanced-form" style="display:none;">                
+                <div class="advanced-form__input">
+                    <label class="form-check-label" for="advancedSearch">Alcohol Level</label>
+                    <%= range_field(:alcohol_level, nil, value: 10, class: "slider slider::-webkit-slider-thumb" , in: 10..60) %>
+                </div>
+                <div class="advanced-form__input">
+                    <label class="form-check-label" for="advancedSearch">Temperature</label>
+                    <%= range_field(:temperature, nil, value: 0, class: "slider slider::-webkit-slider-thumb" , in: 0..4) %>
+                </div>
+                <div class="advanced-form__input">
+                    <label class="form-check-label" for="advancedSearch">IBU</label>
+                    <%= range_field(:ibu, nil, value: 0, class: "slider slider::-webkit-slider-thumb" , in: 0..10) %>
+                </div>
+            </div>
+            
+            <div class="simple-form__btn">
+                <button type="submit" class="btn btn-outline-primary btn-lg">Search</button>
+            </div>
+
+        <% end %>
+    </div>
+
+    <div class="drinks-list">
+        <% @drinks.each do |drink| %>
+          <div class="card drink-card">
+            <%= image_tag drink.image_url, class: 'drink-card__img' %>
+            <div class="drink-card__body">
+                <h2><%= drink.name %></h2>
+                <p><%= drink.description %></p>
+            </div>
+          </div>
+        <% end %>
+        <%# paginate @drinks%>
+    </div>
+</div>
+
