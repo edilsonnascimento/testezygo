@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bundler'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
 #will_paginate is a pagination library that integrates with Ruby on Rails
